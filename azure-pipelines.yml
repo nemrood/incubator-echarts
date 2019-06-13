@@ -1,21 +1,10 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
-trigger:
-- master
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- task: NodeTool@0
+- task: AzureRmWebAppDeployment@4
   inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'exit'
+    appType: 'webAppLinux'
+    WebAppName: 'xyhome'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- task: UseNode@1
+  inputs:
